@@ -1,0 +1,60 @@
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+var server = require('http').createServer(app);
+var io = require('socket.io')(server); // Bind socket.io to our express server.
+var ejs = require('ejs');
+
+app.set('view engine', 'ejs');
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('public'));
+
+app.get('/', function(req, res){
+    res.render('index');
+});
+
+// get request for section I
+app.get('/sectionI', function(req, res){
+    res.render('sectionI');
+});
+
+// get request for section II
+app.get('/sectionII', function(req, res){
+    res.render('sectionII');
+});
+
+// get request for section IV
+app.get('/sectionIV', function(req, res){
+    res.render('sectionIV');
+});
+
+// Start the server, listening on port 3000
+server.listen(3000, () => {
+    console.log("Listening to requests on port 3000...");
+});
+
+const SerialPort = require('serialport'); 
+const Readline = SerialPort.parsers.Readline;
+const port = new SerialPort('COM3', {baudRate: 19200}); //Connect serial port to port COM4. Because my Arduino Board is connected on port COM4. See yours on Arduino IDE -> Tools -> Port
+const parser = port.pipe(new Readline({delimiter: '\r\n'})); //Read the line only when new line comes.
+
+
+parser.on('data', (data) => { // Read data
+    var today = new Date();
+
+    //console.log(data); // print out the data
+
+    io.sockets.emit('data', { data: data });
+});
+
+
+io.on('connection', (socket) => {
+    console.log("Someone connected."); //show a log as a new client connects.
+
+
+    // upon client disconnect then send instruction to arduino to stop running the mode
+    socket.on('disconnect', function(){
+        console.log("Someone disconnected."); // show a log that a client disconnected
+    });
+});
