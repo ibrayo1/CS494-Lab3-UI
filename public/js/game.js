@@ -23,7 +23,10 @@ window.onload = function() {
  
         // physics settings
         physics: {
-            default: "arcade"
+            default: "arcade",
+            arcade: {
+                debug: false
+            }
         },
         canvas: document.querySelector('canvas') // need this to place game in html
     }
@@ -37,7 +40,7 @@ class playGame extends Phaser.Scene{
     }
     preload(){
         this.load.image("platform", "img/platform.png");
-        this.load.image("player", "img/player.png");
+        this.load.atlas('canabalt', 'img/sprites.png', 'js/sprites.json');
     }
     create(){
  
@@ -69,12 +72,30 @@ class playGame extends Phaser.Scene{
         this.addPlatform(game.config.width, game.config.width / 2);
  
         // adding the player;
-        this.player = this.physics.add.sprite(gameOptions.playerStartPosition, game.config.height / 2, "player");
+        this.player = this.physics.add.sprite(gameOptions.playerStartPosition, game.config.height / 2, 'canabalt', 'Player_01.png');
         this.player.setGravityY(gameOptions.playerGravity);
+        this.player.setDisplaySize(32,48);
+        this.player.body.offset.y = 2;
  
         // setting collisions between the player and the platform group
         this.physics.add.collider(this.player, this.platformGroup);
+
+        // create run animation
+        this.anims.create({
+            key: 'run',
+            repeat: -1,
+            frameRate: 15,
+            frames: this.anims.generateFrameNames('canabalt', {
+                prefix: 'Player_',
+                suffix: '.png',
+                start: 1,
+                end: 16,
+                zeroPad: 2
+            })
+        });
  
+        this.player.play('run');
+
         // checking for input
         this.socket.on('data', function(data){
             if(data.data > 600){
