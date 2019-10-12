@@ -84,7 +84,7 @@ class playGame extends Phaser.Scene{
         this.anims.create({
             key: 'run',
             repeat: -1,
-            frameRate: 15,
+            frameRate: 20,
             frames: this.anims.generateFrameNames('canabalt', {
                 prefix: 'Player_',
                 suffix: '.png',
