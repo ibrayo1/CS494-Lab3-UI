@@ -16,8 +16,8 @@ window.onload = function() {
     // object containing configuration options
     let gameConfig = {
         type: Phaser.AUTO,
-        width: 667,
-        height: 375,
+        width: 976,
+        height: 336,
         scene: playGame,
         backgroundColor: 0x444444,
  
@@ -99,7 +99,6 @@ class playGame extends Phaser.Scene{
         // checking for input
         this.socket.on('data', function(data){
             if(data.data > 600){
-                console.log(data.data);
                 if(self.player.body.touching.down || (self.playerJumps > 0 && self.playerJumps < gameOptions.jumps)){
                     if(self.player.body.touching.down){
                         self.playerJumps = 0;
