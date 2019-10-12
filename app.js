@@ -24,6 +24,11 @@ app.get('/sectionII', function(req, res){
     res.render('sectionII');
 });
 
+// get request for section III
+app.get('/sectionIII', function(req, res){
+    res.render('sectionIII');
+});
+
 // get request for section IV
 app.get('/sectionIV', function(req, res){
     res.render('sectionIV');
