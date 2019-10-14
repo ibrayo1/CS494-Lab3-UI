@@ -30,6 +30,7 @@ window.onload = function() {
         },
         canvas: document.querySelector('canvas') // need this to place game in html
     }
+    socket = io();
     game = new Phaser.Game(gameConfig);
 }
  
@@ -54,7 +55,6 @@ class playGame extends Phaser.Scene{
         });
 
         var self = this;
-        this.socket = io();
  
         // pool
         this.platformPool = this.add.group({
@@ -97,7 +97,7 @@ class playGame extends Phaser.Scene{
         this.player.play('run');
 
         // checking for input
-        this.socket.on('data', function(data){
+        socket.on('data', function(data){
             if(data.data > 600){
                 if(self.player.body.touching.down || (self.playerJumps > 0 && self.playerJumps < gameOptions.jumps)){
                     if(self.player.body.touching.down){
