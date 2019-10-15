@@ -39,7 +39,7 @@
                         <div class="col-lg-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <canvas height="100" id="Sensor1"></canvas>
+                                    <canvas height="75" id="Sensor1"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                         <div class="col-lg-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <canvas height="100" id="Sensor2"></canvas>
+                                    <canvas height="75" id="Sensor2"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                         <div class="col-lg-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <canvas height="100" id="Sensor3"></canvas>
+                                    <canvas height="75" id="Sensor3"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                         <div class="col-lg-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <canvas height="100" id="Sensor4"></canvas>
+                                    <canvas height="75" id="Sensor4"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -105,6 +105,176 @@
                 </div>
             </div>
         </div>
+        </br></br></br></br></br></br>
+
+        <script>
+            window.onload = function(){
+
+                var socket = io(); // connect to the server
+
+                // Globals
+                var updateCount = 0;
+
+                // chart objects
+                var sensor1 = document.getElementById('Sensor1').getContext('2d');
+                var sensor2 = document.getElementById('Sensor2').getContext('2d');
+                var sensor3 = document.getElementById('Sensor3').getContext('2d');
+                var sensor4 = document.getElementById('Sensor4').getContext('2d');
+                
+                // config for the chart
+                var config = {
+                    legend: {display: false},
+                    tooltips: {
+                        enabled: false
+                    }
+                }
+
+                // create chart for Medial Forefoot
+                var MFchart = new Chart(sensor1, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: "Medial Forefoot",
+                            data: [],
+                            fill: false,
+                            borderColor: '#3498DB',
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: Object.assign({}, config, {
+                        title:{
+                            display: true,
+                            text: "Medial Forefoot",
+                            fontSize: 22
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    suggestedMax: 1000,
+                                    suggestedMin: 300
+                                }
+                            }],
+                            xAxes: [{ // hide the x-axes since we dont really need em
+                                ticks: {
+                                    display: false
+                                }
+                            }]
+                        }
+                    })
+                });
+
+                // create chart for Lateral Mid-foot
+                var LFchart = new Chart(sensor2, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: "Lateral Mid-foot",
+                            data: [],
+                            fill: false,
+                            borderColor: '#3498DB',
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: Object.assign({}, config, {
+                        title:{
+                            display: true,
+                            text: "Lateral Mid-foot",
+                            fontSize: 22
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    suggestedMax: 1000,
+                                    suggestedMin: 300
+                                }
+                            }],
+                            xAxes: [{ // hide the x-axes since we dont really need em
+                                ticks: {
+                                    display: false
+                                }
+                            }]
+                        }
+                    })
+                });
+
+                // create chart for Lateral Mid-foot
+                var MMchart = new Chart(sensor3, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: "Medial Mid-foot",
+                            data: [],
+                            fill: false,
+                            borderColor: '#3498DB',
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: Object.assign({}, config, {
+                        title:{
+                            display: true,
+                            text: "Medial Mid-foot",
+                            fontSize: 22
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    suggestedMax: 1000,
+                                    suggestedMin: 300
+                                }
+                            }],
+                            xAxes: [{ // hide the x-axes since we dont really need em
+                                ticks: {
+                                    display: false
+                                }
+                            }]
+                        }
+                    })
+                });
+
+                // create chart for Lateral Mid-foot
+                var HEELchart = new Chart(sensor4, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: "Heel",
+                            data: [],
+                            fill: false,
+                            borderColor: '#3498DB',
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: Object.assign({}, config, {
+                        title:{
+                            display: true,
+                            text: "Heel",
+                            fontSize: 22
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    suggestedMax: 1000,
+                                    suggestedMin: 300
+                                }
+                            }],
+                            xAxes: [{ // hide the x-axes since we dont really need em
+                                ticks: {
+                                    display: false
+                                }
+                            }]
+                        }
+                    })
+                });
+
+            }
+        </script>
 
     </body>
 </html>
