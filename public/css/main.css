@@ -432,7 +432,7 @@ a, a:hover, button, button:hover, .btnborder, .btntop {
 
 .statistics {
   padding: 140px 0;
-  background-image: url("../assets/img/slider.jpg");
+  background-image: url("../assets/img/shoe_bg.jpg");
   background-position: center;
   background-attachment: fixed;
   overflow: hidden;
@@ -1451,7 +1451,7 @@ Slider
 
 .intro-page {
   padding: 200px 0 140px;
-  background-image: url("../assets/img/slider.jpg");
+  background-image: url("../assets/img/shoe_bg.jpg");
   background-size: cover;
   background-position: center;
   color: #ffffff;
