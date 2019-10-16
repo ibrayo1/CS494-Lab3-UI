@@ -19,7 +19,7 @@ window.onload = function() {
         width: 976,
         height: 336,
         scene: [preloadGame, playGame],
-        backgroundColor: 0x444444,
+        backgroundColor: 0x4D4D59,
  
         // physics settings
         physics: {
@@ -43,6 +43,9 @@ class preloadGame extends Phaser.Scene{
     preload(){
         this.load.image("platform", "img/platform.png");
         this.load.atlas('canabalt', 'img/sprites.png', 'js/sprites.json');
+        this.load.image("play_btn", "img/play_button.png");
+        this.load.image("game_title", "img/game_title.png");
+        this.load.image("title_bg", "img/game_title_bg.png");
     }
     create(){
  
@@ -60,7 +63,42 @@ class preloadGame extends Phaser.Scene{
             })
         });
 
-        this.scene.start("PlayGame");
+        // add the title for the game in the start menu
+        this.add.image(game.config.width / 2, game.config.height * 0.20, "game_title").setDepth(1);
+
+        // add the background image for the start menu
+        this.add.image(0, 0, "title_bg").setOrigin(0).setDepth(0);
+
+        // add text to the scene to instruct the user to click the play button of tap their foot to start
+        this.instructions = this.add.text(game.config.width * 0.50, game.config.height * 0.90, "click play or tap your shoe to start your daring escape.", { font: '20px Arial' });
+        this.instructions.setTint(0xffffff);
+
+        // add a play button and set it as interactive
+        this.playButton = this.add.image(game.config.width / 2, game.config.height / 2, "play_btn").setDepth(1);
+        this.playButton.setInteractive();
+
+        // on hover change the color of the play button to blue
+        this.playButton.on("pointerover", ()=>{
+            this.playButton.setTint(0x429bf5);
+        });
+
+        // when the user doesn't hover over the play button set the tint back to the original color
+        this.playButton.on("pointerout", ()=>{
+            this.playButton.setTint(0xffffff); 
+        });
+
+        // on click and release start the game
+        this.playButton.on("pointerup", ()=>{
+            this.scene.start("PlayGame");
+        });
+
+        // the player could also just use their shoe to start the game
+        socket.on('data', function(){
+            if(data.data > 600){
+                this.scene.start("PlayGame");
+            }
+        });
+
     }
 }
 
@@ -106,6 +144,7 @@ class playGame extends Phaser.Scene{
         // setting collisions between the player and the platform group
         this.physics.add.collider(this.player, this.platformGroup);
  
+        // start the running animation for the player
         this.player.anims.play('run');
 
         // checking for input
