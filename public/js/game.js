@@ -20,6 +20,7 @@ window.onload = function() {
         height: 336,
         scene: [preloadGame, playGame],
         backgroundColor: 0x4D4D59,
+        pixelArt: true,
  
         // physics settings
         physics: {
