@@ -43,25 +43,37 @@ class preloadGame extends Phaser.Scene{
     }
     preload(){
         this.load.image("platform", "img/platform.png");
-        this.load.atlas('canabalt', 'img/sprites.png', 'js/sprites.json');
+        this.load.spritesheet('player_run', 'img/canabalt_run.png', {frameWidth: 30, frameHeight: 34});
+        this.load.spritesheet('player_jump', 'img/canabalt_jump.png', {frameWidth: 30, frameHeight: 34});
+        this.load.spritesheet('player_fall', 'img/canabalt_fall.png', {frameWidth: 30, frameHeight: 34});
         this.load.image("play_btn", "img/play_button.png");
         this.load.image("game_title", "img/game_title.png");
         this.load.image("title_bg", "img/game_title_bg.png");
     }
     create(){
- 
-        // create run animation
+
+        // create the run animation from the run sprite sheet
         this.anims.create({
             key: 'run',
-            repeat: -1,
+            frames: this.anims.generateFrameNumbers('player_run', {start: 0, end: 14}),
             frameRate: 20,
-            frames: this.anims.generateFrameNames('canabalt', {
-                prefix: 'Player_',
-                suffix: '.png',
-                start: 1,
-                end: 16,
-                zeroPad: 2
-            })
+            repeat: -1
+        });
+
+        // create the jump animation from the jump sprite sheet
+        this.anims.create({
+            key: 'jump',
+            frames: this.anims.generateFrameNumbers('player_jump', {start: 0, end: 3}),
+            frameRate: 20,
+            repeat: 0
+        });
+
+        // create the fall animation from the fall sprite sheet
+        this.anims.create({
+            key: 'fall',
+            frames: this.anims.generateFrameNumbers('player_fall', {start: 0, end: 6}),
+            frameRate: 10,
+            repeat: -1
         });
 
         // add the title for the game in the start menu
@@ -93,10 +105,12 @@ class preloadGame extends Phaser.Scene{
             this.scene.start("PlayGame");
         });
 
+        var socket = io();
+        var self = this;
         // the player could also just use their shoe to start the game
-        socket.on('data', function(){
+        socket.on('data', function(data){
             if(data.data > 600){
-                this.scene.start("PlayGame");
+                self.scene.start("PlayGame");
             }
         });
 
@@ -109,7 +123,9 @@ class playGame extends Phaser.Scene{
         super("PlayGame");
     }
     create(){
- 
+
+        this.scene.remove("PreloadGame");
+
         // group with all active platforms.
         this.platformGroup = this.add.group({
  
@@ -137,16 +153,18 @@ class playGame extends Phaser.Scene{
         this.addPlatform(game.config.width, game.config.width / 2);
  
         // adding the player;
-        this.player = this.physics.add.sprite(gameOptions.playerStartPosition, game.config.height / 2, 'canabalt', 'Player_01.png');
+        this.player = this.physics.add.sprite(gameOptions.playerStartPosition, game.config.height / 2, 'player_run');
         this.player.setGravityY(gameOptions.playerGravity);
-        this.player.setDisplaySize(32,48);
-        this.player.body.offset.y = 2;
+        this.player.setDisplaySize(56,72);
  
         // setting collisions between the player and the platform group
         this.physics.add.collider(this.player, this.platformGroup);
  
         // start the running animation for the player
         this.player.anims.play('run');
+
+        // checking for input
+        this.input.on("pointerdown", this.jump, this);
 
         // checking for input
         socket.on('data', function(data){
@@ -156,8 +174,9 @@ class playGame extends Phaser.Scene{
                         self.playerJumps = 0;
                     }
                     self.player.setVelocityY(gameOptions.jumpForce * -1);
+        
                     self.playerJumps++;
-                }
+                } 
             }
         });
 
@@ -182,7 +201,27 @@ class playGame extends Phaser.Scene{
         platform.displayWidth = platformWidth;
         this.nextPlatformDistance = Phaser.Math.Between(gameOptions.spawnRange[0], gameOptions.spawnRange[1]);
     }
+    // the player jumps when on the ground, or once in the air as long as there are jumps left and the first jump was on the ground
+    jump(){
+        if(this.player.body.touching.down || (this.playerJumps > 0 && this.playerJumps < gameOptions.jumps)){
+            if(this.player.body.touching.down){
+                this.playerJumps = 0;
+            }
+            this.player.setVelocityY(gameOptions.jumpForce * -1);
+
+            this.playerJumps++;
+        } 
+    }
     update(){
+        // updates the player animation depending on wheter or not player is in air or on platform
+        if (this.player.body.touching.down){
+            this.player.anims.play('run', true);
+        }
+        else if (this.player.body.velocity.y > 0){
+            this.player.anims.play('fall', true);
+        } else{
+            this.player.anims.play('jump', false);
+        } 
  
         // game over
         if(this.player.y > game.config.height){
