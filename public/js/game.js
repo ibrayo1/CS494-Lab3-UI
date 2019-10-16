@@ -18,7 +18,7 @@ window.onload = function() {
         type: Phaser.AUTO,
         width: 976,
         height: 336,
-        scene: playGame,
+        scene: [preloadGame, playGame],
         backgroundColor: 0x444444,
  
         // physics settings
@@ -33,15 +33,41 @@ window.onload = function() {
     socket = io();
     game = new Phaser.Game(gameConfig);
 }
- 
-// playGame scene
-class playGame extends Phaser.Scene{
+
+
+// preloadGame scene
+class preloadGame extends Phaser.Scene{
     constructor(){
-        super("PlayGame");
+        super("PreloadGame");
     }
     preload(){
         this.load.image("platform", "img/platform.png");
         this.load.atlas('canabalt', 'img/sprites.png', 'js/sprites.json');
+    }
+    create(){
+ 
+        // create run animation
+        this.anims.create({
+            key: 'run',
+            repeat: -1,
+            frameRate: 20,
+            frames: this.anims.generateFrameNames('canabalt', {
+                prefix: 'Player_',
+                suffix: '.png',
+                start: 1,
+                end: 16,
+                zeroPad: 2
+            })
+        });
+
+        this.scene.start("PlayGame");
+    }
+}
+
+// playGame scene
+class playGame extends Phaser.Scene{
+    constructor(){
+        super("PlayGame");
     }
     create(){
  
@@ -79,22 +105,8 @@ class playGame extends Phaser.Scene{
  
         // setting collisions between the player and the platform group
         this.physics.add.collider(this.player, this.platformGroup);
-
-        // create run animation
-        this.anims.create({
-            key: 'run',
-            repeat: -1,
-            frameRate: 20,
-            frames: this.anims.generateFrameNames('canabalt', {
-                prefix: 'Player_',
-                suffix: '.png',
-                start: 1,
-                end: 16,
-                zeroPad: 2
-            })
-        });
  
-        this.player.play('run');
+        this.player.anims.play('run');
 
         // checking for input
         socket.on('data', function(data){
