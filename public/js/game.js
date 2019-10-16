@@ -31,7 +31,7 @@ window.onload = function() {
         },
         canvas: document.querySelector('canvas') // need this to place game in html
     }
-    socket = io();
+    socket = io(); // socket for the game scene
     game = new Phaser.Game(gameConfig);
 }
 
@@ -105,12 +105,13 @@ class preloadGame extends Phaser.Scene{
             this.scene.start("PlayGame");
         });
 
-        var socket = io();
+        this.socket = io();
         var self = this;
         // the player could also just use their shoe to start the game
-        socket.on('data', function(data){
+        this.socket.on('data', function(data){
             if(data.data > 600){
-                self.scene.start("PlayGame");
+                self.scene.start("PlayGame"); // start the game play scene
+                self.socket.disconnect(); // disconnect this socket
             }
         });
 
@@ -134,8 +135,6 @@ class playGame extends Phaser.Scene{
                 platform.scene.platformPool.add(platform)
             }
         });
-
-        var self = this;
  
         // pool
         this.platformPool = this.add.group({
@@ -166,6 +165,7 @@ class playGame extends Phaser.Scene{
         // checking for input
         this.input.on("pointerdown", this.jump, this);
 
+        var self = this;
         // checking for input
         socket.on('data', function(data){
             if(data.data > 600){
