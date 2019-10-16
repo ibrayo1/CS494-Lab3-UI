@@ -32,18 +32,19 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div style="height: 100%" class="card">
-                                <h4 style="text-align: center" id="StanceType">0</h4>
+                                <h4 style="text-align: center" id="StanceType">bruh</h4>
                                 <h4 style="text-align: center;">Profile</h4>
                             </div>
                         </div>
                         <div class="col-lg-8">
                             <div class="card">
-                                <div class="card-body">
-                                    <canvas height="100" id="HeatMap"></canvas>
+                                <div class="card-body" style="text-align: center">
+                                    <canvas width="219px" height="480px" style="width: 55%;" id="HeatMap"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <img id="fut" src="img/foot.png" style="visibility: hidden;" />
                 </div>
             </div>
         </div>
@@ -52,8 +53,8 @@
             window.onload = function() {
                 var canvas = document.getElementById("HeatMap");
                 var ctx = canvas.getContext("2d");
-                var img = document.getElementById("scream");
-                ctx.drawImage(img, 10, 10);
+                var img = document.getElementById("fut");
+                ctx.drawImage(img, 0, 0);
             };
         </script>
 
