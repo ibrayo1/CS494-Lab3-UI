@@ -100,11 +100,6 @@ class preloadGame extends Phaser.Scene{
             this.playButton.setTint(0xffffff); 
         });
 
-        // on click and release start the game
-        this.playButton.on("pointerup", ()=>{
-            this.scene.start("PlayGame");
-        });
-
         this.socket = io();
         var self = this;
         // the player could also just use their shoe to start the game
@@ -113,6 +108,12 @@ class preloadGame extends Phaser.Scene{
                 self.scene.start("PlayGame"); // start the game play scene
                 self.socket.disconnect(); // disconnect this socket
             }
+        });
+
+        // on click and release start the game
+        this.playButton.on("pointerup", ()=>{
+            this.scene.start("PlayGame");
+            this.socket.disconnect();
         });
 
     }
