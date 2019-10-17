@@ -49,7 +49,9 @@ parser.on('data', (data) => { // Read data
 
     console.log(data); // print out the data
 
-    io.sockets.emit('data', { data: data });
+    var res = data.split(",");
+
+    io.sockets.emit('data', { MF: res[0], LF: res[1], MM: res[2], HEEL: res[3] });
 });
 
 

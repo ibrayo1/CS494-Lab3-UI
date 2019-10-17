@@ -3,10 +3,14 @@
 Blob[] blobs = new Blob[4];
 PImage fut; // image for foot
 
-var dat;
+var force_sensor = [0, 0, 0, 0];
+
 let socket = io();
 socket.on('data', function(data){
-    dat = data.data / 5;
+    force_sensor[0] = data.MF / 5;
+    force_sensor[1] = data.LF / 5;
+    force_sensor[2] = data.MM / 5;
+    force_sensor[3] = data.HEEL / 5;
 });
 
 void setup() {
@@ -32,12 +36,12 @@ void draw() {
         for (int y = 0; y < height; y++) {
             int index = x + y * width;
             float sum = 0;
-            for (Blob b : blobs) {
-                float d = dist(x, y, b.pos.x, b.pos.y);
-                if(parseInt(dat) > 0){
-                    sum += parseInt(dat) * ( b.r / d );
+            for (int b = 0; b < blobs.length; b++) {
+                float d = dist(x, y, blobs[b].pos.x, blobs[b].pos.y);
+                if(parseInt(force_sensor[b]) > 0){
+                    sum += parseInt(force_sensor[b]) * ( blobs[b].r / d );
                 } else {
-                    sum += 1 * ( b.r / d );
+                    sum += 1 * ( blobs[b].r / d );
                 }
             }
             pixels[index] = color(sum, 255, 255);
