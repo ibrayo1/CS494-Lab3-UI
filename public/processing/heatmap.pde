@@ -2,7 +2,12 @@
 
 Blob[] blobs = new Blob[4];
 PImage fut; // image for foot
+
+var dat;
 let socket = io();
+socket.on('data', function(data){
+    dat = data.data / 5;
+});
 
 void setup() {
     size(290, 720); // set size of canvas
@@ -17,10 +22,7 @@ void setup() {
     blobs[3] = new Blob(135, 620); // HEEL
 
     fut = loadImage("img/foot.png");
-
-    socket.on('data', function(data){
-        
-    });
+    
 }
 
 void draw() {
@@ -32,7 +34,11 @@ void draw() {
             float sum = 0;
             for (Blob b : blobs) {
                 float d = dist(x, y, b.pos.x, b.pos.y);
-                sum += 75 * b.r / d;
+                if(parseInt(dat) > 0){
+                    sum += parseInt(dat) * ( b.r / d );
+                } else {
+                    sum += 1 * ( b.r / d );
+                }
             }
             pixels[index] = color(sum, 255, 255);
         }
@@ -43,7 +49,7 @@ void draw() {
 
     for (Blob b : blobs) {
         b.update();
-        b.show();
+        //b.show();
     }
 }
 
