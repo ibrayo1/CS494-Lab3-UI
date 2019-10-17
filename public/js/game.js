@@ -104,7 +104,7 @@ class preloadGame extends Phaser.Scene{
         var self = this;
         // the player could also just use their shoe to start the game
         this.socket.on('data', function(data){
-            if(data.data > 600){
+            if(data.data > 200){
                 self.scene.start("PlayGame"); // start the game play scene
                 self.socket.disconnect(); // disconnect this socket
             }
@@ -169,7 +169,7 @@ class playGame extends Phaser.Scene{
         var self = this;
         // checking for input
         socket.on('data', function(data){
-            if(data.data > 600){
+            if(data.data > 200){
                 if(self.player.body.touching.down || (self.playerJumps > 0 && self.playerJumps < gameOptions.jumps)){
                     if(self.player.body.touching.down){
                         self.playerJumps = 0;

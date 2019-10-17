@@ -46,9 +46,8 @@ const parser = port.pipe(new Readline({delimiter: '\r\n'})); //Read the line onl
 
 
 parser.on('data', (data) => { // Read data
-    var today = new Date();
 
-    //console.log(data); // print out the data
+    console.log(data); // print out the data
 
     io.sockets.emit('data', { data: data });
 });

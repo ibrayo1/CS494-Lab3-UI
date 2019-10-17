@@ -38,8 +38,9 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="card">
-                                <div class="card-body" style="text-align: center">
-                                    <canvas width="219px" height="480px" style="width: 55%;" id="HeatMap"></canvas>
+                                <div id="HeatMapContainer" class="card-body" style="text-align: center">
+                                    <!-- <canvas width="219px" height="480px" id="HeatMap"></canvas> -->
+                                    <canvas width="329px" height="720px" data-processing-sources="processing/heatmap.pde"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -49,14 +50,41 @@
             </div>
         </div>
 
+        <!--
         <script>
-            window.onload = function() {
-                var canvas = document.getElementById("HeatMap");
-                var ctx = canvas.getContext("2d");
-                var img = document.getElementById("fut");
-                ctx.drawImage(img, 0, 0);
-            };
+            // global variables
+            let img;
+            let socket;
+
+            // preload the image file
+            function preload() {
+                img = loadImage('img/foot.png');
+            }
+
+            // place the canvas in the div container and place the image
+            // of the foot on the canvas
+            function setup(){
+                socket = io(); // connect to server
+
+                colorMode(HSB);
+                
+                // create on the card and place image on it
+                let cnv = createCanvas(329, 720);
+                cnv.parent('HeatMapContainer');
+                image(img, 0, 0, 329, 720);
+            }
+
+            function draw() {
+                if (mouseIsPressed) {
+                    fill(0);
+                } else {
+                    fill(255);
+                }
+                ellipse(mouseX, mouseY, 80, 80);
+            }
+
         </script>
+        -->
 
     </body>
 </html>
