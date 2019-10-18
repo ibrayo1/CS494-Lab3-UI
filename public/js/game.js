@@ -42,13 +42,13 @@ class preloadGame extends Phaser.Scene{
         super("PreloadGame");
     }
     preload(){
-        this.load.image("platform", "img/platform.png");
-        this.load.spritesheet('player_run', 'img/canabalt_run.png', {frameWidth: 30, frameHeight: 34});
-        this.load.spritesheet('player_jump', 'img/canabalt_jump.png', {frameWidth: 30, frameHeight: 34});
-        this.load.spritesheet('player_fall', 'img/canabalt_fall.png', {frameWidth: 30, frameHeight: 34});
-        this.load.image("play_btn", "img/play_button.png");
-        this.load.image("game_title", "img/game_title.png");
-        this.load.image("title_bg", "img/game_title_bg.png");
+        this.load.image("platform", "js/game_assets/platform.png");
+        this.load.spritesheet('player_run', 'js/game_assets/canabalt_run.png', {frameWidth: 30, frameHeight: 34});
+        this.load.spritesheet('player_jump', 'js/game_assets/canabalt_jump.png', {frameWidth: 30, frameHeight: 34});
+        this.load.spritesheet('player_fall', 'js/game_assets/canabalt_fall.png', {frameWidth: 30, frameHeight: 34});
+        this.load.image("play_btn", "js/game_assets/play_button.png");
+        this.load.image("game_title", "js/game_assets/game_title.png");
+        this.load.image("title_bg", "js/game_assets/game_title_bg.png");
     }
     create(){
 
