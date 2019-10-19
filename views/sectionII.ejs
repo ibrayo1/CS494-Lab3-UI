@@ -29,13 +29,34 @@
         <div class="wrapper">
             <div class="our-history">
                 <div class='container'>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div style="height: 100%" class="card">
-                                <h4 style="text-align: center" id="StanceType">stance type</h4>
-                                <h4 style="text-align: center;">Profile</h4>
+
+                    <div class="row justify-content-lg-center">
+                        <div class="card col-lg-4" style="border: none;">
+                            <div class="card-body">
+                                <h4 style="text-align: center;">PARALLEL</h4>
+                                <img src="img/parallel.png" />
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="card" style="border: none">
+                                    <div  class="card-body" style="text-align: center;">
+                                        <h4 style="text-align: center;">IN-TOEING</h4>
+                                        <img id="in-toe" src="img/in-toe.png" />
+                                    </div>
+                                </div>
+                                <div class="card" style="border: none">
+                                    <div  class="card-body" style="text-align: center;">
+                                        <h4 style="text-align: center;">HEEL</h4>
+                                        <img id="heel" src="img/heel.jpg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-lg-4">
                             <div class="card" style="border: none">
                                 <div id="HeatMapContainer" class="card-body" style="text-align: center; padding: 0%;">
@@ -44,46 +65,32 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="card" style="border: none">
+                                    <div class="card-body" style="text-align: center;">
+                                        <h4 style="text-align: center;">OUT-TOEING</h4>
+                                        <img id="out-toe" src="img/out-toe.png" />
+                                    </div>
+                                </div>
+                                <div class="card" style="border: none;">
+                                    <div class="card-body" style="text-align: center;">
+                                        <h4 style="text-align: center;">TIP-TOEING</h4>
+                                        <img id="tip-toe" src="img/tip-toes.jpg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!--
+
         <script>
-            // global variables
-            let img;
-            let socket;
-
-            // preload the image file
-            function preload() {
-                img = loadImage('img/foot.png');
-            }
-
-            // place the canvas in the div container and place the image
-            // of the foot on the canvas
-            function setup(){
-                socket = io(); // connect to server
-
-                colorMode(HSB);
-                
-                // create on the card and place image on it
-                let cnv = createCanvas(329, 720);
-                cnv.parent('HeatMapContainer');
-                image(img, 0, 0, 329, 720);
-            }
-
-            function draw() {
-                if (mouseIsPressed) {
-                    fill(0);
-                } else {
-                    fill(255);
-                }
-                ellipse(mouseX, mouseY, 80, 80);
-            }
-
+            
         </script>
-        -->
 
     </body>
 </html>
