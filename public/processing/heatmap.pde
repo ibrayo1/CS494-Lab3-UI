@@ -25,7 +25,7 @@ void setup() {
     blobs[2] = new Blob(100, 380); // MM
     blobs[3] = new Blob(135, 620); // HEEL
 
-    fut = loadImage("img/foot.png");
+    fut = loadImage("img/foot.png"); // load the image of the foot
     
 }
 
