@@ -20,7 +20,7 @@ void setup() {
 
     background(51);
 
-    blobs[0] = new Blob(95,205); // MF
+    blobs[0] = new Blob(95, 205); // MF
     blobs[1] = new Blob(230, 270); // LF
     blobs[2] = new Blob(100, 380); // MM
     blobs[3] = new Blob(135, 620); // HEEL
