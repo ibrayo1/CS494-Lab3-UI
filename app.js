@@ -46,12 +46,13 @@ const parser = port.pipe(new Readline({delimiter: '\r\n'})); //Read the line onl
 
 
 parser.on('data', (data) => { // Read data
+    var date = new Data();
 
     console.log(data); // print out the data
 
     var res = data.split(",");
 
-    io.sockets.emit('data', { MF: res[0], LF: res[1], MM: res[2], HEEL: res[3] });
+    io.sockets.emit('data', { time: (today.getMinutes())+":"+(today.getSeconds())+":"+(today.getMilliseconds()), MF: res[0], LF: res[1], MM: res[2], HEEL: res[3] });
 });
 
 

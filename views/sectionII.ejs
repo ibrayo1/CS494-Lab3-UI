@@ -31,9 +31,9 @@
                 <div class='container'>
 
                     <div class="row justify-content-lg-center">
-                        <div class="card col-lg-4" style="border: none;">
+                        <div id="parallel" class="card col-lg-4" style="border: none;">
                             <div class="card-body">
-                                <h4 style="text-align: center;">PARALLEL</h4>
+                                <h4 style="text-align: center; color: black;">PARALLEL</h4>
                                 <img src="img/parallel.png" />
                             </div>
                         </div>
@@ -42,16 +42,16 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="row">
-                                <div class="card" style="border: none">
+                                <div id="in-toe" class="card" style="border: none">
                                     <div  class="card-body" style="text-align: center;">
-                                        <h4 style="text-align: center;">IN-TOEING</h4>
-                                        <img id="in-toe" src="img/in-toe.png" />
+                                        <h4 style="text-align: center; color: black;">IN-TOEING</h4>
+                                        <img src="img/in-toe.png" />
                                     </div>
                                 </div>
-                                <div class="card" style="border: none">
+                                <div id="heel" class="card" style="border: none">
                                     <div  class="card-body" style="text-align: center;">
-                                        <h4 style="text-align: center;">HEEL</h4>
-                                        <img id="heel" src="img/heel.jpg" />
+                                        <h4 style="text-align: center; color: black;">HEEL</h4>
+                                        <img src="img/heel.jpg" />
                                     </div>
                                 </div>
                             </div>
@@ -67,16 +67,16 @@
 
                         <div class="col-lg-4">
                             <div class="row">
-                                <div class="card" style="border: none">
+                                <div id="out-toe" class="card" style="border: none">
                                     <div class="card-body" style="text-align: center;">
-                                        <h4 style="text-align: center;">OUT-TOEING</h4>
-                                        <img id="out-toe" src="img/out-toe.png" />
+                                        <h4 style="text-align: center; color: black;">OUT-TOEING</h4>
+                                        <img src="img/out-toe.png" />
                                     </div>
                                 </div>
-                                <div class="card" style="border: none;">
+                                <div id="tip-toe" class="card" style="border: none;">
                                     <div class="card-body" style="text-align: center;">
-                                        <h4 style="text-align: center;">TIP-TOEING</h4>
-                                        <img id="tip-toe" src="img/tip-toes.jpg" />
+                                        <h4 style="text-align: center; color: black;">TIP-TOEING</h4>
+                                        <img src="img/tip-toes.jpg" />
                                     </div>
                                 </div>
                             </div>
@@ -88,6 +88,15 @@
 
 
         <script>
+
+            // get the card elements by id
+            var HEEL  = document.getElementById('heel');
+            var INTOE = document.getElementById('in-toe');
+            var OUTTOE = document.getElementById('out-toe');
+            var PARALLEL = document.getElementById('parallel');
+            var TIPTOE = document.getElementById('tip-toe');
+
+            
 
         </script>
 

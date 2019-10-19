@@ -106,6 +106,9 @@
 
                 var socket = io(); // connect to the server
 
+                // Configuration variables
+                var numberElements = 200;
+
                 // Globals
                 var updateCount = 0;
 
@@ -265,6 +268,45 @@
                             }]
                         }
                     })
+                });
+
+                socket.on('data', function(data){
+                    
+                    // add the data onto the graph
+                    MFchart.data.labels.push(data.time);
+                    MFchart.data.datasets.forEach((dataset) => {dataset.data.push(data.MF)});
+
+                    LFchart.data.labels.push(data.time);
+                    LFchart.data.datasets.forEach((dataset) => {dataset.data.push(data.LF)});
+
+                    MMchart.data.labels.push(data.time);
+                    MMChart.data.datasets.forEach((dataset) => {dataset.data.push(data.MM)});
+
+                    HEELchart.data.labels.push(data.time);
+                    HEELchart.data.datasets.forEach((dataset) => {dataset.data.push(data.HEEL)});
+
+
+                    // shift the graph to the right
+                    if( updateCount > numberElements){
+                        MFchart.data.labels.shift();
+                        MFchart.data.datasets[0].data.shift();
+
+                        LFchart.data.labels.shift();
+                        LFchart.data.datasets[0].data.shift();
+
+                        MMchart.data.labels.shift();
+                        MMchart.data.datasets[0].data.shift();
+
+                        HEELchart.data.labels.shift();
+                        HEELchart.data.datasets[0].data.shift();
+                    } else { updateCount++; }
+
+                    // update all the graphs
+                    MFchart.update();
+                    LFchart.update();
+                    MMchart.update();
+                    HEELchart.update();
+
                 });
 
             }
