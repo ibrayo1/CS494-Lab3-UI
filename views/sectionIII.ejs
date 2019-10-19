@@ -39,6 +39,12 @@
     </body>
 
     <script>
-        
+        var socket = io();
+
+        // get the data from the arduino and change the text
+        socket.on('data', function(data){
+            document.getElementById('direction').innerHTML = data.data;
+        });
+
     </script>
 </html>

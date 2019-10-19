@@ -4,6 +4,7 @@ Blob[] blobs = new Blob[4];
 PImage fut; // image for foot
 
 var force_sensor = [0, 0, 0, 0];
+var profile;
 
 let socket = io();
 socket.on('data', function(data){
@@ -11,6 +12,45 @@ socket.on('data', function(data){
     force_sensor[1] = data.LF / 5;
     force_sensor[2] = data.MM / 5;
     force_sensor[3] = data.HEEL / 5;
+
+    // highlights the specific image for the specific profile of walking
+    if (data.profile == "Normal"){
+        document.getElementById('parallel').style.backgroundColor = '#50C878';
+        document.getElementById('in-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('out-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('tip-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('heel').style.backgroundColor = "#ffffff";
+    } else if (data.profile == "Intoe"){
+        document.getElementById('in-toe').style.backgroundColor = "#50C878";
+        document.getElementById('parallel').style.backgroundColor = "#ffffff";
+        document.getElementById('out-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('tip-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('heel').style.backgroundColor = "#ffffff";
+    } else if (data.profile == "Outoe"){
+        document.getElementById('out-toe').style.backgroundColor = "#50C878";
+        document.getElementById('in-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('parallel').style.backgroundColor = "#ffffff";
+        document.getElementById('tip-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('heel').style.backgroundColor = "#ffffff";
+    } else if (data.profile == "Tiptoe"){
+        document.getElementById('tip-toe').style.backgroundColor = '#50C878';
+        document.getElementById('in-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('out-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('parallel').style.backgroundColor = "#ffffff";
+        document.getElementById('heel').style.backgroundColor = "#ffffff";
+    } else if (data.profile == "Heel") {
+        document.getElementById('heel').style.backgroundColor = "#50C878";
+        document.getElementById('in-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('out-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('tip-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('parallel').style.backgroundColor = "#ffffff";
+    } else {
+        document.getElementById('heel').style.backgroundColor = "#ffffff";
+        document.getElementById('in-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('out-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('tip-toe').style.backgroundColor = "#ffffff";
+        document.getElementById('parallel').style.backgroundColor = "#ffffff";
+    }
 });
 
 void setup() {
