@@ -280,7 +280,7 @@
                     LFchart.data.datasets.forEach((dataset) => {dataset.data.push(data.LF)});
 
                     MMchart.data.labels.push(data.time);
-                    MMChart.data.datasets.forEach((dataset) => {dataset.data.push(data.MM)});
+                    MMchart.data.datasets.forEach((dataset) => {dataset.data.push(data.MM)});
 
                     HEELchart.data.labels.push(data.time);
                     HEELchart.data.datasets.forEach((dataset) => {dataset.data.push(data.HEEL)});
@@ -300,6 +300,12 @@
                         HEELchart.data.labels.shift();
                         HEELchart.data.datasets[0].data.shift();
                     } else { updateCount++; }
+
+                    document.getElementById('StepCount').innerHTML = data.stepcount;
+                    document.getElementById('Speed').innerHTML = data.spd;
+                    document.getElementById('StrideLength').innerHTML = data.stride;
+                    document.getElementById('Cadence').innerHTML = data.candence;
+                    document.getElementById('StepLength').innerHTML = data.stepl;
 
                     // update all the graphs
                     MFchart.update();

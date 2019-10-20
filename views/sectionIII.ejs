@@ -29,9 +29,55 @@
         <div class="wrapper">
             <div class="our-history">
                 <div class="container">
-                    <div class="col-lg-12">
-                        <h4 id="direction" style="text-align: center;">direction</h4>
+
+                    <div class="row">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">
+                            <div class="card" style="border: none;">
+                                <div class="card-body" style="text-align: center;">
+                                    <img id="arrow-up" src="img/arrow-up.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4"></div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card" style="border: none;">
+                                <div class="card-body" style="text-align: center;">
+                                    <img id="arrow-left" src="img/arrow-left.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card" style="height: 100%; border: none;">
+                                <div class="card-body align-items-center d-flex justify-content-center">
+                                    <h1 id="direction" style="text-align: center;">direction</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card" style="border: none;">
+                                <div class="card-body" style="text-align: center;">
+                                    <img id="arrow-right" src="img/arrow-right.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">
+                            <div class="card" style="border: none;">
+                                <div class="card-body" style="text-align: center;">
+                                    <img id="arrow-down" src="img/arrow-down.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4"></div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -39,12 +85,45 @@
     </body>
 
     <script>
-        var socket = io();
+        var socket = io(); // connect to server
 
-        // get the data from the arduino and change the text
+        // dirs[0], dirs[1], dirs[2], dirs[3] 
+        // maps to up, down, left, right respectively
+        var dirs = [
+            document.getElementById('arrow-up'),
+            document.getElementById('arrow-down'),
+            document.getElementById('arrow-left'),
+            document.getElementById('arrow-right')
+        ]
+
+        // get the data from the arduino and change the text and select image
         socket.on('data', function(data){
             document.getElementById('direction').innerHTML = data.data;
+
+            if(data.data == "Moving Forward"){
+                changeColors(0)
+            } else if (data.data == "Moving Backwards"){
+                changeColors(1);
+            } else if (data.data == "Moving Left"){
+                changeColors(2);
+            } else if (data.data == "Moving Right"){
+                changeColors(3);
+            } else {
+                changeColors(-1);
+            }
+
         });
+
+        // function which changes the color of the 
+        function changeColors(val){
+            for(var i = 0; i < dirs.length; i++){
+                if(i == val){
+                    dirs[i].style.backgroundColor = "lightgreen";
+                } else {
+                    dirs[i].style.backgroundColor = "white";
+                }
+            }
+        }
 
     </script>
 </html>
