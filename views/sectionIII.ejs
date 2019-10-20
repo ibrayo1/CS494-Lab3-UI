@@ -100,6 +100,7 @@
         socket.on('data', function(data){
             document.getElementById('direction').innerHTML = data.data;
 
+            // change background of image depending on which direction the user is walking
             if(data.data == "Moving Forward"){
                 changeColors(0)
             } else if (data.data == "Moving Backwards"){
@@ -114,7 +115,7 @@
 
         });
 
-        // function which changes the color of the 
+        // function which changes the color of the background of image
         function changeColors(val){
             for(var i = 0; i < dirs.length; i++){
                 if(i == val){
