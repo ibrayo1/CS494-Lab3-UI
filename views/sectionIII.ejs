@@ -102,21 +102,21 @@
 
             // change background of image depending on which direction the user is walking
             if(data.data == "Moving Forward"){
-                changeColors(0)
+                changeColorOfDir(0)
             } else if (data.data == "Moving Backwards"){
-                changeColors(1);
+                changeColorOfDir(1);
             } else if (data.data == "Moving Left"){
-                changeColors(2);
+                changeColorOfDir(2);
             } else if (data.data == "Moving Right"){
-                changeColors(3);
+                changeColorOfDir(3);
             } else {
-                changeColors(-1);
+                changeColorOfDir(-1);
             }
 
         });
 
         // function which changes the color of the background of image
-        function changeColors(val){
+        function changeColorOfDir(val){
             for(var i = 0; i < dirs.length; i++){
                 if(i == val){
                     dirs[i].style.backgroundColor = "lightgreen";
