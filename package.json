@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "author": "Ibrahim Ayoob <ibrayo1128@gmail.com> (https://github.com/ibrayo1/CS494-UI.git)",
   "license": "MIT",
