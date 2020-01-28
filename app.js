@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var server = require('http').createServer(app);
 var io = require('socket.io')(server); // Bind socket.io to our express server.
 var ejs = require('ejs');
+const PORT = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 
@@ -35,13 +36,13 @@ app.get('/sectionIV', function(req, res){
 });
 
 // Start the server, listening on port 3000
-server.listen(3000, () => {
-    console.log("Listening to requests on port 3000...");
+server.listen(PORT, () => {
+    console.log(`Listening to requests on ${server.address().port}`);
 });
 
 const SerialPort = require('serialport'); 
 const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort('COM3', {baudRate: 19200}); //Connect serial port to port COM4. Because my Arduino Board is connected on port COM4. See yours on Arduino IDE -> Tools -> Port
+const port = new SerialPort('COM4', {baudRate: 19200}); //Connect serial port to port COM4. Because my Arduino Board is connected on port COM4. See yours on Arduino IDE -> Tools -> Port
 const parser = port.pipe(new Readline({delimiter: '\r\n'})); //Read the line only when new line comes.
 
 
@@ -53,10 +54,10 @@ parser.on('data', (data) => { // Read data
     var res = data.split(",");
 
     // this is the data being sent for section 1
-    io.sockets.emit('data', { time: (today.getMinutes())+":"+(today.getSeconds())+":"+(today.getMilliseconds()), MF: res[0], LF: res[1], MM: res[2], HEEL: res[3], stepl: res[4], stride: res[5], cadence: res[6], spd: res[7], stepcount: res[9] });
+    //io.sockets.emit('data', { time: (today.getMinutes())+":"+(today.getSeconds())+":"+(today.getMilliseconds()), MF: res[0], LF: res[1], MM: res[2], HEEL: res[3], stepl: res[4], stride: res[5], cadence: res[6], spd: res[7], stepcount: res[9] });
     
     // this is the data being sent for section 3 and section 4
-    //io.sockets.emit('data', {data: data});
+    io.sockets.emit('data', {data: data});
     
     // this is the data that is sent for section two
     //io.sockets.emit('data', {MF: res[0], LF: res[1], MM: res[2], HEEL: res[3], profile: res[4]  })
